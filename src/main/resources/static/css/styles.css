@@ -1,0 +1,58 @@
+
+:root{
+    --black: black;
+    --yellow: #fff600;
+    --teal: #4FA3AB;
+    --grey: #cecece;
+    --white: white;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+.btn-lg{
+    height: 90px;
+    width: 220px;
+    border-radius: 30px
+}
+
+#background-video {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+
+.card{
+    color: var(--teal);
+    background-color: #141C23;
+
+
+    border-top-color: rgba(225,225,225,0.5);
+    border-left-color: rgba(225,225,225,0.5);
+    border-bottom-color: rgba(225,225,225,0.1);
+    border-right-color: rgba(225,225,225,0.1);
+
+    backdrop-filter: blur(1rem);
+    box-shadow: 1rem 1rem 1rem rgba(0,0,0,0.5);
+}
+
+.card .btn{
+    background-color: var(--black);
+    color: var(--teal);
+}
+
+h1,h2,h3{
+    color: var(--teal);
+}
+
+a{
+    color: #FFF839;
+}

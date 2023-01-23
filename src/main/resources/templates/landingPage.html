@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+
+<head th:replace="partials::head(title = 'Landing')"/>
+
+<body>
+<!--Background Video START-->
+<video id="background-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
+    <source src="/images/file.mp4" type="video/mp4">
+</video>
+<!--Background Video END-->
+
+<!--Navbar START-->
+<nav th:replace="partials::landingNavbar"/>
+<!--Navbar END-->
+
+<!--Sign-in Section START-->
+<section class="pt-4 pt-md-11 ms-4">
+    <!-- Image -->
+    <img src="images/landingImage2.png"
+         class="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 aos-init aos-animate" alt="..."
+         data-aos="fade-up" data-aos-delay="100"
+         style="height: 900px; width: 900px">
+    <div style="position: absolute;
+        top: 670px;
+        right: 580px;"
+        class="d-flex align-items-center justify-content-center">
+        <a th:href="@{/sign-up}" style="background-color: black; color: #fff600; border: none;" class="btn btn-lg btn-primary me-3 d-flex align-items-center justify-content-center">
+            Sign-Up
+        </a>
+        <a th:href="@{/login}" style="background-color: #fff600; color: black; border: none;" class="btn btn-lg btn-primary d-flex align-items-center justify-content-center">Login
+        </a>
+    </div>
+
+</section>
+<!--Sign-in Section END-->
+
+
+<script th:replace="partials::scripts"/>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+
+<head th:replace="partials::head(title = 'Login')"/>
+
+<body>
+
+<nav th:replace="partials::loginNavBar"/>
+
+<!--Form Alignment START-->
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-success m-3" role="alert" th:text="${success}" th:if="${success}"></div>
+
+        <div th:if="${param.error}">
+            Invalid Username and Password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <span class="anchor" id="formLogin1"></span>
+
+        <!-- form card login.html -->
+        <div style="flex-direction: row;"  class="card card-outline-secondary">
+<!--            <img style="width: 30%" th:src="@{/images/oldNetworth-1.png}" class="card-img m-2" alt="...">-->
+
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <h3 class="mb-0">Login</h3>
+                </div>
+
+                <!--Login Form START-->
+                <form th:action="@{/login}" method="post" autocomplete="off" class="form" id="formLogin" name="formLogin" role="form">
+                    <!-- Username Input -->
+                    <div class="form-group">
+                        <label for="uname1">Username</label>
+                        <input class="form-control" id="uname1" name="username" required="" type="text"  style="color: #4FA3AB;"/>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <label for="pwd1">Password</label>
+                        <input autocomplete="new-password" class="form-control" id="pwd1" required="" type="password" name="password"  style="color: #4FA3AB;"/>
+                    </div>
+                    <!-- Form Buttons -->
+                    <div class="form-group d-flex justify-content-between mt-4">
+                        <p>Not a member? <a href="/sign-up">Sign-Up</a></p>
+                        <!-- Go Back Button (Button Removed due to sending back to profile page albeit previously logging out.-->
+<!--                        <button class="btn " type="submit" value="Go back!" onclick="history.back()">Go Back</button>-->
+                        <!-- Login Button -->
+                        <button class="btn" type="submit" value="Log In">Sign-in</button>
+                    </div>
+                </form>
+                <!--Login Form START-->
+
+            </div>
+            <!--/card-block-->
+        </div>
+        <!-- /form card login.html -->
+    </div>
+</div>
+<!--Form Alignment START-->
+
+
+<script th:replace="partials::scripts"/>
+</body>
+</html>
