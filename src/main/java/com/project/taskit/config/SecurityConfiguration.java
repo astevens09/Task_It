@@ -47,18 +47,18 @@ public class SecurityConfiguration {
             .formLogin(form ->{
                 form
                 .loginPage("/login")
-                        .defaultSuccessUrl("/tasks")
+                        .defaultSuccessUrl("/tasks",true)
                         .permitAll();
             })
                 .csrf(csrf ->{csrf
                         .disable();});
-            http.logout(logout -> {logout
+//            http.logout(logout -> {logout
 //                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 //                    .logoutUrl("/perform_logout")
 //                    .logoutSuccessUrl("/login");
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID");
-            });
+//                    .invalidateHttpSession(true)
+//                    .deleteCookies("JSESSIONID");
+//            });
 //            .formLogin(Customizer.withDefaults());
         return http.build();
     }

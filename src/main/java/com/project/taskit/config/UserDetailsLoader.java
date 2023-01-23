@@ -29,8 +29,8 @@ public class UserDetailsLoader implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("No user found for " + username);
         }
-        System.out.println("load user hit");
-        System.out.println("user password: "+user.getPassword());
+//        System.out.println("load user hit");
+//        System.out.println("user password: "+user.getPassword());
 
         return new UserWithRoles(user);
     }

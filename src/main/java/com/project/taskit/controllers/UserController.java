@@ -43,9 +43,15 @@ public class UserController {
             @RequestParam("password") String password,
             Model model, RedirectAttributes attributes) {
 
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println(email);
+        System.out.println(username);
+        System.out.println(password);
+
 
         //New User object
-        User user = new User(firstName, lastName, email, password, username);
+        User user = new User(firstName, lastName, username,email,password);
 
 
 
@@ -56,7 +62,7 @@ public class UserController {
             model.addAttribute("email", user.getEmail());
 
             model.addAttribute("invalid", "Password must be 8 characters and above and must contain a special character");
-            return "users/sign-up";
+            return "user/signupPage";
         }
 
         String hash = passwordEncoder.encode(user.getPassword());
