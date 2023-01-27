@@ -36,13 +36,29 @@
     padding-top: 0px;">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="images/Task-It-1 (5).png" alt="Bootstrap" width="150" height="150">
+            <img src="/images/Task-It-1 (5).png" alt="Bootstrap" width="150" height="150">
         </a>
 
         <a>About</a>
     </div>
 </nav>
 <!--Sign-up/Login NavBar START-->
+
+<!--Task NavBar START-->
+<nav th:fragment="taskNavBar" class="navbar" style="
+    padding-bottom: 0px;
+    padding-top: 0px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/images/Task-It-1 (5).png" alt="Bootstrap" width="150" height="150">
+        </a>
+
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">logout</button>
+        </form>
+    </div>
+</nav>
+<!--Task NavBar START-->
 
 
 <!--<script >-->

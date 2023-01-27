@@ -4,12 +4,32 @@
 <head th:replace="partials::head(title = 'User Profile')"/>
 
 <body>
+<nav th:replace="partials::taskNavBar"/>
 
-<h1>Task Page</h1>
+<div class="d-flex justify-content-center">
+    <form action="/tasks/create" method="post">
+        <div class="input-group">
+            <input name="action" type="text" class="todo-input ">
+            <select name="completed" class="todo-complete-option">
+                <option value="incomplete" selected>Incomplete</option>
+                <option value="complete">Completed</option>
+            </select>
+            <select name="category" class="todo-category-option">
+                <option value="work">Work</option>
+                <option value="chores">Chores</option>
+                <option value="academic">Academic</option>
+                <option value="finance">Finance</option>
+                <option value="health">Health</option>
+                <option value="misc">Misc</option>
+            </select>
+            <input type="date" name="date">
+            <button type="submit" class="btn todo-button">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
-<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">logout</button>
-</form>
 
 <script th:replace="partials::scripts"/>
 </body>

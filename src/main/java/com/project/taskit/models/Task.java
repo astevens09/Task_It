@@ -20,25 +20,25 @@ public class Task {
     @Column
     private String action;
 
-    @Temporal(value = TemporalType.DATE)
     @Column
-    private Date dateCreated;
+    private String dateCreated;
 
-    @Temporal(value = TemporalType.DATE)
     @Column
-    private Date scheduledDate;
+    private String scheduledDate;
 
     @Column
     private String title;
 
     @Column
-    private boolean completed;
+    private String completed;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
 }

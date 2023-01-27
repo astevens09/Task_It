@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -16,7 +18,6 @@ public class Category {
     @Column
     private String type;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<Task> tasks;
 }
