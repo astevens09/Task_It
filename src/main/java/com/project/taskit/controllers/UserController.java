@@ -51,7 +51,7 @@ public class UserController {
 
 
         //New User object
-        User user = new User(firstName, lastName, username,email,password);
+        User user = new User(firstName, lastName, username,email,password,"null");
 
 
 

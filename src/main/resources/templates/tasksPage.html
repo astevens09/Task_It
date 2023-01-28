@@ -30,7 +30,31 @@
     </form>
 </div>
 
+<section class="container">
+    <div th:each="task: ${tasks}">
+    <div class="card mt-4 cardTask">
+        <div class="card-header d-flex justify-content-">
+            <p th:text="'Date Created'+${task.dateCreated}"></p>
+            <p th:text="'Category: '+${task.getCategory().getType()}"></p>
+        </div>
+
+        <div class="card-body">
+<!--            <h5 class="card-title">Card title</h5>-->
+            <p class="card-text" th:text="${task.action}"></p>
+            <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
+
+            <button type="button" class="btn btn-primary">Completed</button>
+
+            <form th:action="'/tasks/delete/'+${task.id}" method="post">
+            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>
+
 
 <script th:replace="partials::scripts"/>
+<script th:replace="partials::taskScripts"/>
 </body>
 </html>

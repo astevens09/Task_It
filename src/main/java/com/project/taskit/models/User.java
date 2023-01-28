@@ -40,12 +40,13 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String email, String password) {
+    public User(String firstName, String lastName, String username, String email, String password, String profileImage) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.profileImage = profileImage;
     }
 
     public User(User copy) {

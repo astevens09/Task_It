@@ -40,5 +40,16 @@ public class Task {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public Task() {
+    }
 
+    public Task(String action, String dateCreated, String scheduledDate, String completed, User user, Category category) {
+        this.action = action;
+        this.dateCreated = dateCreated;
+        this.scheduledDate = scheduledDate;
+
+        this.completed = completed;
+        this.user = user;
+        this.category = category;
+    }
 }

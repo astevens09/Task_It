@@ -20,4 +20,12 @@ public class Category {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Task> tasks;
+
+    public Category() {
+    }
+
+    public Category(String type) {
+        this.type = type;
+    }
+
 }
