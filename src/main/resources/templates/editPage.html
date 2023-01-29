@@ -7,9 +7,12 @@
 <nav th:replace="partials::taskNavBar"/>
 
 <div class="d-flex justify-content-center">
-    <form action="/tasks/create" onsubmit="" method="post">
+    <h2>Edit Task</h2>
+    <br>
+    <form action="/tasks/edit" onsubmit=""  method="post">
         <div class="input-group">
-            <input name="action" type="text" id="todo-input">
+            <input hidden name="id" th:value="${task.id}">
+            <input name="action" th:value="${task.action}" type="text" id="todo-input">
             <select name="completed" class="todo-complete-option">
                 <option value="incomplete" selected>Incomplete</option>
                 <option value="complete">Completed</option>
@@ -22,7 +25,7 @@
                 <option value="health">Health</option>
                 <option value="misc">Misc</option>
             </select>
-            <input type="date" name="date">
+            <input th:value="${task.scheduledDate}" type="date" name="date">
             <button type="submit" class="btn todo-button">
                 <i class="fa-solid fa-plus"></i>
             </button>
@@ -31,7 +34,6 @@
 </div>
 
 <section class="container">
-    <div th:each="task: ${tasks}">
     <div class="card mt-4 cardTask">
         <div class="card-header d-flex justify-content-">
             <p th:text="'Date Created'+${task.dateCreated}"></p>
@@ -48,12 +50,7 @@
             <form th:action="'/tasks/delete/'+${task.id}" method="post">
             <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
             </form>
-
-            <form th:action="'/tasks/edit/'+${task.id}" method="get">
-                <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
-            </form>
         </div>
-    </div>
     </div>
 </section>
 

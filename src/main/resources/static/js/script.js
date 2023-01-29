@@ -1,6 +1,6 @@
 var deleteBtn = document.getElementsByClassName("deleteBtn");
 var cardTask = document.getElementsByClassName("cardTask");
-
+var todoInput = document.getElementById("todo-input");
 
 // for (let i = 0; i < deleteBtn.length; i++) {
 //     deleteBtn.item(i).addEventListener("click",(ele)=>{
@@ -17,7 +17,9 @@ var cardTask = document.getElementsByClassName("cardTask");
 
 // deleteBtn.addEventListener("click", deleteFunction);
 
-
-function deleteFunction(){
-    cardTask.hidden = true;
+function isEmpty(){
+    if(todoInput.value.length == 0){
+        alert("Task field must have input.");
+        return false;
+    }
 }

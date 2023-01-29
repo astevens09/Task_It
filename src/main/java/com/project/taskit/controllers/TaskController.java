@@ -11,10 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,7 +46,7 @@ public class TaskController {
                              @RequestParam String action,
                              @RequestParam String completed,
                              @RequestParam String category,
-                             @RequestParam String date) throws ParseException {
+                             @RequestParam(required = false, defaultValue = "null") String date) throws ParseException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() == "anonymousUser")
@@ -59,17 +56,21 @@ public class TaskController {
         User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.getReferenceById(loggedinUser.getId());
 
-        System.out.println(date);
+        System.out.println("Date: "+date);
 
         SimpleDateFormat newFormatter =new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
 
         Category category1 = categoryDao.findByType(category);
 
-        String scheduledDate = dateFormat(date);
+        if(!date.equals("null")){
+             date = dateFormat(date);
+        }
+
         String createdDate = newFormatter.format(new Date());
 
-        Task task = new Task(action, createdDate,scheduledDate,completed,user,category1);
+        Task task = new Task(action, createdDate,date,completed,user,category1);
 
+        System.out.println("I'm here");
         taskDao.save(task);
 
         return "redirect:/tasks";
@@ -81,15 +82,46 @@ public class TaskController {
         return "redirect:/tasks";
     }
 //
-//    @PostMapping("/tasks/edit")
-//    public String editTask(){
-//
-//
-//    }
+    @GetMapping("/tasks/edit/{id}")
+    public String editTaskGet(@PathVariable Long id, Model model){
+        Task task = taskDao.getReferenceById(id);
+
+        if(!task.getScheduledDate().equals("null")){
+            task.setScheduledDate(dateFormatEdit(task.getScheduledDate()));
+        }
+
+
+        model.addAttribute("task",task);
+//        model.addAttribute("date", date);
+        return "editPage";
+    }
+
+    @PostMapping("/tasks/edit")
+    public String editTaskPost(@RequestParam String action,
+                               @RequestParam String completed,
+                               @RequestParam String category,
+                               @RequestParam(required = false, defaultValue = "null") String date,
+                               @RequestParam long id){
+
+        System.out.println("Id: "+id);
+//        System.out.println("Task c date: "+ task.getDateCreated());
+        System.out.println("Task s date: "+ date);
+        System.out.println("Task category: "+ category);
+        System.out.println("Task action: "+ action);
+
+        return "redirect:/tasks";
+//        taskDao.save(task);
+    }
 
     public static String dateFormat(String d){
         String year = d.substring(0,4);
         String dayMonth = d.substring(5);
         return dayMonth+"-"+year;
+    }
+
+    public static String dateFormatEdit(String d){
+        String year = d.substring(6);
+        String dayMonth = d.substring(0,6);
+        return year+"-"+dayMonth;
     }
 }
