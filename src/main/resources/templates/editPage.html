@@ -6,10 +6,10 @@
 <body>
 <nav th:replace="partials::taskNavBar"/>
 
+<h2 class="d-flex justify-content-center" >Edit Task</h2>
+<br>
 <div class="d-flex justify-content-center">
-    <h2>Edit Task</h2>
-    <br>
-    <form action="/tasks/edit" onsubmit=""  method="post">
+    <form action="/tasks/edit" method="post">
         <div class="input-group">
             <input hidden name="id" th:value="${task.id}">
             <input name="action" th:value="${task.action}" type="text" id="todo-input">
@@ -17,20 +17,21 @@
                 <option value="incomplete" selected>Incomplete</option>
                 <option value="complete">Completed</option>
             </select>
-            <select  name="category" class="todo-category-option">
+            <select name="category" class="todo-category-option">
                 <option th:each="category: ${categories}"
                         th:value="${category.getType()}"
                         th:text="${category.getType()}"
                         th:selected="${category.getType() == task.category.getType()}"></option>
-<!--                <option value="chores">Chores</option>-->
-<!--                <option value="academic">Academic</option>-->
-<!--                <option value="finance">Finance</option>-->
-<!--                <option value="health">Health</option>-->
-<!--                <option value="misc">Misc</option>-->
+                <!--                <option value="chores">Chores</option>-->
+                <!--                <option value="academic">Academic</option>-->
+                <!--                <option value="finance">Finance</option>-->
+                <!--                <option value="health">Health</option>-->
+                <!--                <option value="misc">Misc</option>-->
             </select>
             <input th:value="${task.scheduledDate}" type="date" name="date">
             <button type="submit" class="btn todo-button">
-                <i class="fa-solid fa-plus"></i>
+                Edit
+<!--                <i class="fa-solid fa-plus"></i>-->
             </button>
         </div>
     </form>
@@ -38,20 +39,20 @@
 
 <section class="container">
     <div class="card mt-4 cardTask">
-        <div class="card-header d-flex justify-content-">
-            <p th:text="'Date Created'+${task.dateCreated}"></p>
+        <div class="card-header d-flex justify-content-between">
+            <p th:text="'Date Created: '+${task.dateCreated}"></p>
             <p th:text="'Category: '+${task.getCategory().getType()}"></p>
         </div>
 
         <div class="card-body">
-<!--            <h5 class="card-title">Card title</h5>-->
+            <!--            <h5 class="card-title">Card title</h5>-->
             <p class="card-text" th:text="${task.action}"></p>
             <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
 
             <button type="button" class="btn btn-primary">Completed</button>
 
             <form th:action="'/tasks/delete/'+${task.id}" method="post">
-            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
+                <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
             </form>
         </div>
     </div>

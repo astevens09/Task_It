@@ -23,8 +23,9 @@
                 <option value="misc">Misc</option>
             </select>
             <input type="date" name="date">
-            <button type="submit" class="btn todo-button">
-                <i class="fa-solid fa-plus"></i>
+            <button type="submit" class="btn btn-primary todo-button">
+                Add
+<!--                <i class="fa-solid fa-plus"></i>-->
             </button>
         </div>
     </form>
@@ -32,28 +33,42 @@
 
 <section class="container">
     <div th:each="task: ${tasks}">
-    <div class="card mt-4 cardTask">
-        <div class="card-header d-flex justify-content-">
-            <p th:text="'Date Created'+${task.dateCreated}"></p>
-            <p th:text="'Category: '+${task.getCategory().getType()}"></p>
+        <div class="card mt-4 cardTask">
+            <div class="card-header d-flex justify-content-between">
+                <p th:text="'Date Created: '+${task.dateCreated}"></p>
+                <p th:text="'Category: '+${task.getCategory().getType()}"></p>
+            </div>
+
+            <div class="card-body">
+                <!--            <h5 class="card-title">Card title</h5>-->
+                <p class="card-text" th:text="${task.action}"></p>
+                <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary">Completed</button>
+
+                    <div class="d-flex">
+                        <form th:action="'/tasks/delete/'+${task.id}"
+                              method="post"
+                              onclick="return confirm('Are you sure you want to delete this task?')">
+                            <button type="submit"
+                                    th:attr="data-id=${task.id}"
+                                    class="btn btn-danger deleteBtn me-3"
+                            >Delete
+                            </button>
+                        </form>
+
+                        <form th:action="'/tasks/edit/'+${task.id}" method="get">
+                            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Edit
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
         </div>
-
-        <div class="card-body">
-<!--            <h5 class="card-title">Card title</h5>-->
-            <p class="card-text" th:text="${task.action}"></p>
-            <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
-
-            <button type="button" class="btn btn-primary">Completed</button>
-
-            <form th:action="'/tasks/delete/'+${task.id}" method="post">
-            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Delete</button>
-            </form>
-
-            <form th:action="'/tasks/edit/'+${task.id}" method="get">
-                <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Edit</button>
-            </form>
-        </div>
-    </div>
     </div>
 </section>
 
