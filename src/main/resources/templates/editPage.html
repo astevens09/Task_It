@@ -17,13 +17,16 @@
                 <option value="incomplete" selected>Incomplete</option>
                 <option value="complete">Completed</option>
             </select>
-            <select name="category" class="todo-category-option">
-                <option value="work">Work</option>
-                <option value="chores">Chores</option>
-                <option value="academic">Academic</option>
-                <option value="finance">Finance</option>
-                <option value="health">Health</option>
-                <option value="misc">Misc</option>
+            <select  name="category" class="todo-category-option">
+                <option th:each="category: ${categories}"
+                        th:value="${category.getType()}"
+                        th:text="${category.getType()}"
+                        th:selected="${category.getType() == task.category.getType()}"></option>
+<!--                <option value="chores">Chores</option>-->
+<!--                <option value="academic">Academic</option>-->
+<!--                <option value="finance">Finance</option>-->
+<!--                <option value="health">Health</option>-->
+<!--                <option value="misc">Misc</option>-->
             </select>
             <input th:value="${task.scheduledDate}" type="date" name="date">
             <button type="submit" class="btn todo-button">

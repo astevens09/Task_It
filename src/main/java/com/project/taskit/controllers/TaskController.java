@@ -85,6 +85,7 @@ public class TaskController {
     @GetMapping("/tasks/edit/{id}")
     public String editTaskGet(@PathVariable Long id, Model model){
         Task task = taskDao.getReferenceById(id);
+        List<Category> categories = categoryDao.findAll();
 
         if(!task.getScheduledDate().equals("null")){
             task.setScheduledDate(dateFormatEdit(task.getScheduledDate()));
@@ -92,6 +93,7 @@ public class TaskController {
 
 
         model.addAttribute("task",task);
+        model.addAttribute("categories", categories);
 //        model.addAttribute("date", date);
         return "editPage";
     }
@@ -103,11 +105,21 @@ public class TaskController {
                                @RequestParam(required = false, defaultValue = "null") String date,
                                @RequestParam long id){
 
+        Task task = taskDao.getReferenceById(id);
+        Category category1 = categoryDao.findByType(category);
+
+        task.setAction(action);
+        task.setCompleted(completed);
+        task.setCategory(category1);
+        task.setScheduledDate(dateFormat(date));
+
         System.out.println("Id: "+id);
-//        System.out.println("Task c date: "+ task.getDateCreated());
+        System.out.println("Task c date: "+ task.getDateCreated());
         System.out.println("Task s date: "+ date);
         System.out.println("Task category: "+ category);
         System.out.println("Task action: "+ action);
+
+        taskDao.save(task);
 
         return "redirect:/tasks";
 //        taskDao.save(task);
@@ -121,7 +133,7 @@ public class TaskController {
 
     public static String dateFormatEdit(String d){
         String year = d.substring(6);
-        String dayMonth = d.substring(0,6);
+        String dayMonth = d.substring(0,5);
         return year+"-"+dayMonth;
     }
 }
