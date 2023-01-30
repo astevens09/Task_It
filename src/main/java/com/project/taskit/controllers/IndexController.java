@@ -12,6 +12,11 @@ public class IndexController {
         return "landingPage";
     }
 
+    @GetMapping("/about")
+    public String getAboutPage(){
+        return "about";
+    }
+
     @GetMapping("/login")
     public String loginPage(){
         return "user/loginPage";

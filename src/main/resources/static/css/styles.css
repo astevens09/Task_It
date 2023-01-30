@@ -56,3 +56,17 @@ h1,h2,h3{
 a{
     color: #FFF839;
 }
+
+.btnPlacement{
+    position: absolute;
+    top: 81%;
+    left: 29%;
+}
+
+@media screen and (max-width: 1140px){
+    .btnPlacement{
+        position: absolute;
+        top: 81%;
+        left: 45%;
+    }
+}
