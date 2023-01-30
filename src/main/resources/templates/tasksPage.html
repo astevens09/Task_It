@@ -6,6 +6,7 @@
 <body>
 <nav th:replace="partials::taskNavBar"/>
 
+<!-- Create task START -->
 <div class="d-flex justify-content-center">
     <div class="d-flex flex-column">
         <div class="d-flex">
@@ -23,12 +24,12 @@
                     <option value="complete">Completed</option>
                 </select>
                 <select name="category" class="todo-category-option">
-                    <option value="work">Work</option>
-                    <option value="chores">Chores</option>
-                    <option value="academic">Academic</option>
-                    <option value="finance">Finance</option>
-                    <option value="health">Health</option>
-                    <option value="misc">Misc</option>
+                    <option value="Work">Work</option>
+                    <option value="Chores">Chores</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Health">Health</option>
+                    <option value="Misc">Misc</option>
                 </select>
                 <input type="date" name="date">
                 <button type="submit" class="btn btn-primary todo-button">
@@ -40,7 +41,10 @@
     </div>
 
 </div>
+<!-- Create task END -->
 
+<!-- Tasks START -->
+<div th:if="${tasks.size() > 0}">
 <section class="container">
     <div th:each="task: ${tasks}">
         <div class="card mt-4 cardTask">
@@ -83,6 +87,8 @@
         </div>
     </div>
 </section>
+</div>
+<!-- Tasks END -->
 
 <div th:replace="partials::scripts"/>
 

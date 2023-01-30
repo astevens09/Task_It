@@ -66,6 +66,7 @@ public class UserController {
 
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
+        user.setProfileImage("https://cdn.filestackcontent.com/SftfgsETQmEGDT0gfjsq");
         userDao.save(user);
         attributes.addFlashAttribute("success", "You successfully registered! You can now login");
         return "redirect:/login";

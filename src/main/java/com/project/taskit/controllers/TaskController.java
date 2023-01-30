@@ -35,7 +35,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public String getTaskPage(Model model){
-        List<Task> tasks = taskDao.findAll();
+//        List<Task> tasks = taskDao.findAll();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() == "anonymousUser")
@@ -44,6 +44,7 @@ public class TaskController {
         }
         User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.getReferenceById(loggedinUser.getId());
+        List<Task> tasks = user.getTasks();
 
 
         model.addAttribute("tasks",tasks);

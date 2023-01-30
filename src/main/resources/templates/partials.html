@@ -57,16 +57,17 @@
             <img src="/images/Task-It-1 (5).png" alt="Bootstrap" width="150" height="150">
         </a>
 
-        <form action="/logout" method="post">
-            <button type="submit" class="btn btn-primary">logout</button>
-        </form>
-        <div id="userProfilePic">
+
+        <div class="d-flex flex-column" id="userProfilePic">
             <a href="#">
 
                 <img style="width: 80px; border-radius: 10px;" class="avatar-img "
                      th:src="${user.profileImage}" alt="">
 
             </a>
+            <form class="mt-2" action="/logout" method="post">
+                <button type="submit" class="btn btn-primary">logout</button>
+            </form>
         </div>
     </div>
 </nav>
