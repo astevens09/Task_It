@@ -7,28 +7,38 @@
 <nav th:replace="partials::taskNavBar"/>
 
 <div class="d-flex justify-content-center">
-    <form action="/tasks/create" onsubmit="" method="post">
-        <div class="input-group">
-            <input name="action" type="text" id="todo-input">
-            <select name="completed" class="todo-complete-option">
-                <option value="incomplete" selected>Incomplete</option>
-                <option value="complete">Completed</option>
-            </select>
-            <select name="category" class="todo-category-option">
-                <option value="work">Work</option>
-                <option value="chores">Chores</option>
-                <option value="academic">Academic</option>
-                <option value="finance">Finance</option>
-                <option value="health">Health</option>
-                <option value="misc">Misc</option>
-            </select>
-            <input type="date" name="date">
-            <button type="submit" class="btn btn-primary todo-button">
-                Add
-<!--                <i class="fa-solid fa-plus"></i>-->
-            </button>
+    <div class="d-flex flex-column">
+        <div class="d-flex">
+            <p style="margin-bottom: 4px;">Task</p>
+            <p style=" margin-left: 150px;margin-bottom: 4px;">Status</p>
+            <p style=" margin-left: 52px;margin-bottom: 4px;">Category</p>
+            <p style=" margin-left: 35px;margin-bottom: 4px;">Due date</p>
         </div>
-    </form>
+
+        <form action="/tasks/create" onsubmit="" method="post">
+            <div class="input-group">
+                <input name="action" type="text" id="todo-input">
+                <select name="completed" class="todo-complete-option">
+                    <option value="incomplete" selected>Incomplete</option>
+                    <option value="complete">Completed</option>
+                </select>
+                <select name="category" class="todo-category-option">
+                    <option value="work">Work</option>
+                    <option value="chores">Chores</option>
+                    <option value="academic">Academic</option>
+                    <option value="finance">Finance</option>
+                    <option value="health">Health</option>
+                    <option value="misc">Misc</option>
+                </select>
+                <input type="date" name="date">
+                <button type="submit" class="btn btn-primary todo-button">
+                    Add
+                    <!--                <i class="fa-solid fa-plus"></i>-->
+                </button>
+            </div>
+        </form>
+    </div>
+
 </div>
 
 <section class="container">
@@ -45,8 +55,10 @@
                 <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
 
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary">Completed</button>
-
+                    <form th:action="'/tasks/complete/'+${task.id}" method="post">
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${task.completed} == 'complete' ? 'Mark Uncomplete' : 'Mark Complete'"></button>
+                    </form>
                     <div class="d-flex">
                         <form th:action="'/tasks/delete/'+${task.id}"
                               method="post"

@@ -86,6 +86,21 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+
+    @PostMapping("/tasks/complete/{id}")
+    public String completeTask(@PathVariable long id){
+        Task task = taskDao.getReferenceById(id);
+
+        if(task.getCompleted().equalsIgnoreCase("incomplete")){
+            task.setCompleted("complete");
+        }else
+            task.setCompleted("incomplete");
+
+        taskDao.save(task);
+
+        return "redirect:/tasks";
+    }
+
     @PostMapping("/tasks/delete/{id}")
     public String deleteTask(@PathVariable Long id){
         taskDao.deleteById(id);
