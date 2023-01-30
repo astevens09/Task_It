@@ -56,16 +56,28 @@
         <form action="/logout" method="post">
             <button type="submit" class="btn btn-primary">logout</button>
         </form>
+        <div id="userProfilePic">
+            <a href="#">
+
+                <img style="width: 50px;" class="avatar-img "
+                     th:src="${user.profileImage}" alt="">
+
+            </a>
+        </div>
     </div>
 </nav>
 <!--Task NavBar START-->
 
 
 <!--<script >-->
-    <script th:fragment="scripts" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-            crossOrigin="anonymous"></script>
-    <script th:fragment="taskScripts" src="/js/script.js"></script>
+<div th:fragment="scripts">
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossOrigin="anonymous"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script  src="/js/fileStackApi.js"></script>
+<script  src="/js/script.js"></script>
+</div>
 
 <!--</script>-->
 </body>

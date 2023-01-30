@@ -37,7 +37,17 @@ public class TaskController {
     public String getTaskPage(Model model){
         List<Task> tasks = taskDao.findAll();
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() == "anonymousUser")
+        {
+            return "redirect:login";
+        }
+        User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.getReferenceById(loggedinUser.getId());
+
+
         model.addAttribute("tasks",tasks);
+        model.addAttribute("user", user);
         return "tasksPage";
     }
 
@@ -87,6 +97,14 @@ public class TaskController {
         Task task = taskDao.getReferenceById(id);
         List<Category> categories = categoryDao.findAll();
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() == "anonymousUser")
+        {
+            return "redirect:login";
+        }
+        User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.getReferenceById(loggedinUser.getId());
+
         if(!task.getScheduledDate().equals("null")){
             task.setScheduledDate(dateFormatEdit(task.getScheduledDate()));
         }
@@ -94,6 +112,7 @@ public class TaskController {
 
         model.addAttribute("task",task);
         model.addAttribute("categories", categories);
+        model.addAttribute("user",user);
 //        model.addAttribute("date", date);
         return "editPage";
     }

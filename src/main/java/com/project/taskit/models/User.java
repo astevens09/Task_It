@@ -29,7 +29,7 @@ public class User {
     private String email;
 
     @Column
-    private String profileImage;
+    private String profileImage = "https://cdn.filestackcontent.com/SftfgsETQmEGDT0gfjsq";
 
     @Column(nullable = false)
     private String password;

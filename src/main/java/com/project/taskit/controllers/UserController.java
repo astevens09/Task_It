@@ -5,14 +5,13 @@ import com.project.taskit.models.User;
 import com.project.taskit.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -103,5 +102,27 @@ public class UserController {
                 password.contains("\\") ||
                 password.contains("'");
 
+    }
+
+    @GetMapping("/users/imageUpload/{baseImgUrl}/{extensionUrl}/{returnUrl}")
+    public String profileImageUpload(@PathVariable String baseImgUrl,
+                                     @PathVariable String extensionUrl,
+                                     @PathVariable String returnUrl) {
+        System.out.println("Upload image controller hit");
+        System.out.println("base image url: " + baseImgUrl);
+        System.out.println("extension url: " + extensionUrl);
+        System.out.println("return url: " + returnUrl);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() == "anonymousUser") {
+            return "redirect:login";
+        }
+        User loggedinUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.getReferenceById(loggedinUser.getId());
+
+        String imgUrl = "https://" + baseImgUrl + "/" + extensionUrl;
+        user.setProfileImage(imgUrl);
+        userDao.save(user);
+        System.out.println("Save should hit");
+        return "redirect:/tasks" ;
     }
 }
