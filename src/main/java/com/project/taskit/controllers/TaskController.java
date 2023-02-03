@@ -168,9 +168,9 @@ public class TaskController {
         }
         User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.getReferenceById(loggedinUser.getId());
-        String date = "null";
+        String date = "";
 
-        if(!task.getScheduledDate().equals("null")){
+        if(!task.getScheduledDate().equals("unscheduled")){
             task.setScheduledDate(task.getScheduledDate());
             date = dateFormatToDate(task.getScheduledDate());
         }
