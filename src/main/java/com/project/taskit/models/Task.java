@@ -43,13 +43,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(String action, String dateCreated, String scheduledDate, String completed, User user, Category category) {
+    public Task(String action, String dateCreated, String scheduledDate, User user, Category category, String title) {
         this.action = action;
         this.dateCreated = dateCreated;
         this.scheduledDate = scheduledDate;
-
-        this.completed = completed;
         this.user = user;
         this.category = category;
+        this.title = title;
     }
 }

@@ -6,7 +6,7 @@
 <nav th:replace="partials::loginNavBar"/>
 
 <header>
-    <div class="container text-center py-5 mb-4">
+    <div class="container text-center  mb-2">
         <h1 class="fw-light text-white">About</h1>
         <hr>
     </div>
@@ -15,15 +15,17 @@
 <!-- Developer Profiles-->
 <div class="container">
 
-<!--    <div class="row">-->
+    <div class="row">
         <!-- ANTHONY STEVENS -->
-<!--        <div class="col-xl-3 col-md-6 mb-4 align-items-stretch">-->
-        <div class="d-flex justify-content-center">
+        <!--        <div class="col-lg-3  mb-4 align-items-stretch">-->
+        <div class="row">
+            <div class="d-flex justify-content-center">
             <!-- Profile Image -->
-            <div style="width: 400px;height:525px;bottom: 50px;" class="card rounded border-0 shadow">
-                <img src="https://cdn.filestackcontent.com/fxiMCnTxSmKq42eQ51Yz" class="card-img-top" alt="Anthony Stevens">
+            <div style="width:32rem;" class="card rounded border-0 shadow mb-5">
+                <img src="https://cdn.filestackcontent.com/fxiMCnTxSmKq42eQ51Yz" class="card-img-top"
+                     alt="Anthony Stevens">
                 <!-- Card Footer -->
-                <div  class="card-body text-center">
+                <div class="card-body text-center">
                     <h5 class="card-title mb-0">Anthony Stevens</h5>
                     <div class="card-text text-secondary">Full-Stack Web Developer</div>
                     <!-- Social Icons -->
@@ -35,21 +37,30 @@
                         <!-- Codeup Alumni Portal Link -->
                         <a style="text-decoration: none" class=""
                            th:href="@{https://alumni.codeup.com/students/1666}" target="_blank">
-                            <img style="width: 1.5em; height: 1.5em" class="navbar-img" src="/images/coduptr.png" alt="">
+                            <img style="width: 1.5em; height: 1.5em" class="navbar-img" src="/images/coduptr.png"
+                                 alt="">
                         </a>
                         <!-- LinkedIn Link -->
                         <a style="text-decoration: none" class="fa-brands fa-linkedin-in"
                            th:href="@{https://www.linkedin.com/in/anthonymstevens/}" target="_blank">
                         </a>
                     </div>
+
+                    <p class="card-text">Anthony is a passionate Full Stack Developer who seeks the challenge of creating software that will
+                        impact the user’s problem domain.
+                        The front end technologies used for Task-it are HTML, CSS, Thymeleaf, bootstrap, and Javascript. The
+                        backend technologies used
+                        Mysql, Java, Spring boot, Spring Security, Spring Jpa.</p>
                 </div>
+
+            </div>
             </div>
         </div>
-<!--    </div>-->
+        <!--        </div>-->
 
-    <!-- End Row -->
-</div>
-<!-- End Container -->
+        <!-- End Row -->
+    </div>
+    <!-- End Container -->
 
 </body>
 </html>

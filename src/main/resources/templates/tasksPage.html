@@ -7,88 +7,111 @@
 <nav th:replace="partials::taskNavBar"/>
 
 <!-- Create task START -->
-<div class="d-flex justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="d-flex">
-            <p style="margin-bottom: 4px;">Task</p>
-            <p style=" margin-left: 150px;margin-bottom: 4px;">Status</p>
-            <p style=" margin-left: 52px;margin-bottom: 4px;">Category</p>
-            <p style=" margin-left: 35px;margin-bottom: 4px;">Due date</p>
-        </div>
+<!--<div class="d-flex justify-content-center">-->
+<!--    <div class="d-flex flex-column">-->
+<!--        <div class="d-flex">-->
+<!--            <p style="margin-bottom: 4px;">Task</p>-->
+<!--            <p style=" margin-left: 150px;margin-bottom: 4px;">Status</p>-->
+<!--            <p style=" margin-left: 52px;margin-bottom: 4px;">Category</p>-->
+<!--            <p style=" margin-left: 35px;margin-bottom: 4px;">Due date</p>-->
+<!--        </div>-->
 
-        <form action="/tasks/create" onsubmit="" method="post">
-            <div class="input-group">
-                <input name="action" type="text" id="todo-input">
-                <select name="completed" class="todo-complete-option">
-                    <option value="incomplete" selected>Incomplete</option>
-                    <option value="complete">Completed</option>
-                </select>
-                <select name="category" class="todo-category-option">
-                    <option value="Work">Work</option>
-                    <option value="Chores">Chores</option>
-                    <option value="Academic">Academic</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Health">Health</option>
-                    <option value="Misc">Misc</option>
-                </select>
-                <input type="date" name="date">
-                <button type="submit" class="btn btn-primary todo-button">
-                    Add
+<!--        <form action="/tasks/create" onsubmit="" method="post">-->
+<!--            <div class="input-group">-->
+<!--                <input placeholder="Task" class="form-control" name="action" type="text" id="todo-input">-->
+<!--                <select name="completed" class="todo-complete-option form-select" >-->
+<!--                    <option value="incomplete" selected>Incomplete</option>-->
+<!--                    <option value="complete">Completed</option>-->
+<!--                </select>-->
+
+<!--                <label class="input-group-text" for="categorySelect">Category</label>-->
+<!--                <select name="category" id="categorySelect" class="todo-category-option form-select">-->
+<!--                    <option value="Work">Work</option>-->
+<!--                    <option value="Chores">Chores</option>-->
+<!--                    <option value="Academic">Academic</option>-->
+<!--                    <option value="Finance">Finance</option>-->
+<!--                    <option value="Health">Health</option>-->
+<!--                    <option value="Misc">Misc</option>-->
+<!--                </select>-->
+<!--                <input type="date" name="date">-->
+<!--                <button type="submit" class="btn btn-primary todo-button">-->
+<!--                    Add-->
                     <!--                <i class="fa-solid fa-plus"></i>-->
-                </button>
-            </div>
-        </form>
-    </div>
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
 
-</div>
+<!--</div>-->
 <!-- Create task END -->
 
-<!-- Tasks START -->
-<div th:if="${tasks.size() > 0}">
-<section class="container">
-    <div th:each="task: ${tasks}">
-        <div class="card mt-4 cardTask">
-            <div class="card-header d-flex justify-content-between">
-                <p th:text="'Date Created: '+${task.dateCreated}"></p>
-                <p th:text="'Category: '+${task.getCategory().getType()}"></p>
-            </div>
+<!-- Container START -->
+<div class="container">
+    <div class="row g-4">
 
-            <div class="card-body">
-                <!--            <h5 class="card-title">Card title</h5>-->
-                <p class="card-text" th:text="${task.action}"></p>
-                <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"></p>
+        <div th:replace="partials::sideNavbar"/>
 
-                <div class="d-flex justify-content-between">
-                    <form th:action="'/tasks/complete/'+${task.id}" method="post">
-                        <button type="submit" class="btn btn-primary"
-                                th:text="${task.completed} == 'complete' ? 'Mark Uncomplete' : 'Mark Complete'"></button>
-                    </form>
-                    <div class="d-flex">
-                        <form th:action="'/tasks/delete/'+${task.id}"
-                              method="post"
-                              onclick="return confirm('Are you sure you want to delete this task?')">
-                            <button type="submit"
-                                    th:attr="data-id=${task.id}"
-                                    class="btn btn-danger deleteBtn me-3"
-                            >Delete
-                            </button>
-                        </form>
+        <div class="col-lg-8" style="margin-top: 0px;">
+            <!-- Tasks START -->
+            <div th:if="${tasks.size() > 0}">
+                <section class="container">
+                    <div th:each="task: ${tasks}">
+                        <div class="card mt-4 cardTask">
+                            <div class="card-header d-flex justify-content-between">
+                                <p th:text="'Title: '+${task.title}"
+                                   th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
 
-                        <form th:action="'/tasks/edit/'+${task.id}" method="get">
-                            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Edit
-                            </button>
-                        </form>
+                                <p th:text="'Category: '+${task.getCategory().getType()}"
+                                   th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
+                            </div>
+
+                            <div class="card-body">
+                                <!--            <h5 class="card-title">Card title</h5>-->
+                                <p th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'"
+                                   class="card-text" th:text="${task.action}"></p>
+
+                                <p th:text="'Date Created: '+${task.dateCreated}"
+                                   th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
+
+                                <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"
+                                   th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
+
+                                <div class="d-flex justify-content-between">
+                                    <form th:action="'/tasks/complete/'+${task.id}" method="post">
+                                        <button type="submit" class="btn btn-primary"
+                                                th:text="${task.completed} == 'complete' ? 'Mark Incomplete' : 'Mark Complete'"></button>
+                                    </form>
+                                    <div class="d-flex">
+                                        <form th:action="'/tasks/delete/'+${task.id}"
+                                              method="post"
+                                              onclick="return confirm('Are you sure you want to delete this task?')">
+                                            <button type="submit"
+                                                    th:attr="data-id=${task.id}"
+                                                    class="btn btn-danger deleteBtn me-3"
+                                            >Delete
+                                            </button>
+                                        </form>
+
+                                        <form th:action="'/tasks/edit/'+${task.id}" method="get">
+                                            <button type="submit" th:attr="data-id=${task.id}" class="btn btn-danger deleteBtn">Edit
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-
-
+                </section>
             </div>
+            <!-- Tasks END -->
         </div>
     </div>
-</section>
 </div>
-<!-- Tasks END -->
+
+
 
 <div th:replace="partials::scripts"/>
 

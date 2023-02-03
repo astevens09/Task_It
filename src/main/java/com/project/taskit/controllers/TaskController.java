@@ -9,12 +9,15 @@ import com.project.taskit.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +58,7 @@ public class TaskController {
     @PostMapping("/tasks/create")
     public String createTask(Model model,
                              @RequestParam String action,
-                             @RequestParam String completed,
+                             @RequestParam String title,
                              @RequestParam String category,
                              @RequestParam(required = false, defaultValue = "null") String date) throws ParseException {
 
@@ -67,24 +70,69 @@ public class TaskController {
         User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.getReferenceById(loggedinUser.getId());
 
-        System.out.println("Date: "+date);
 
-        SimpleDateFormat newFormatter =new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+        SimpleDateFormat newFormatter =new SimpleDateFormat("E MMM dd, yyyy", Locale.ENGLISH);
 
         Category category1 = categoryDao.findByType(category);
 
         if(!date.equals("null")){
-             date = dateFormat(date);
+             date = dateFormatFinal(date);
+        }else{
+            date = "unscheduled";
         }
 
         String createdDate = newFormatter.format(new Date());
 
-        Task task = new Task(action, createdDate,date,completed,user,category1);
+        Task task = new Task(action, createdDate,date,user,category1,title);
+        task.setCompleted("incomplete");
 
-        System.out.println("I'm here");
         taskDao.save(task);
 
         return "redirect:/tasks";
+    }
+
+    @GetMapping("/tasks/date")
+    public String getTaskDate(@RequestParam String date,
+                              Model model){
+
+        date = dateFormatFinal(date);
+        List<Task> tasks = taskDao.findAllByScheduledDate(date);
+        System.out.println("Date: "+date);
+        System.out.println(tasks);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() == "anonymousUser")
+        {
+            return "redirect:login";
+        }
+        User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.getReferenceById(loggedinUser.getId());
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("user", user);
+        return "tasksPage";
+    }
+
+    @GetMapping("/tasks/category")
+    public String getTaskCategory(@RequestParam String category,
+                              Model model){
+
+        System.out.println(category);
+        Category category1 = categoryDao.findByType(category);
+        List<Task> tasks = taskDao.findAllByCategory(category1);
+        System.out.println(tasks);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() == "anonymousUser")
+        {
+            return "redirect:login";
+        }
+        User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.getReferenceById(loggedinUser.getId());
+
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("user", user);
+        return "tasksPage";
     }
 
 
@@ -170,5 +218,12 @@ public class TaskController {
         String year = d.substring(6);
         String dayMonth = d.substring(0,5);
         return year+"-"+dayMonth;
+    }
+
+    public static String dateFormatFinal(String d){
+        LocalDate localDate = LocalDate.parse(d);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd, yyyy");
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E MMM dd, yyyy");
+        return  formatter.format(localDate).toString();
     }
 }

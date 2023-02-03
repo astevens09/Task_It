@@ -27,7 +27,7 @@
 <nav th:fragment="landingNavbar" class="navbar pt-4 pe-3 mb-4">
     <div class="container-fluid justify-content-end">
         <a href="/about"
-                style="color: #FFF600;">
+           style="color: #FFF600;">
             About
         </a>
     </div>
@@ -53,7 +53,7 @@
     padding-bottom: 0px;
     padding-top: 0px;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/tasks">
             <img src="/images/Task-It-1 (5).png" alt="Bootstrap" width="150" height="150">
         </a>
 
@@ -65,23 +65,322 @@
                      th:src="${user.profileImage}" alt="">
 
             </a>
-            <form class="mt-2" action="/logout" method="post">
-                <button type="submit" class="btn btn-primary">logout</button>
-            </form>
+<!--            <form class="mt-2" action="/logout" method="post">-->
+<!--                <button type="submit" class="btn btn-primary">logout</button>-->
+<!--            </form>-->
         </div>
     </div>
 </nav>
 <!--Task NavBar START-->
 
+<!-- START Add Side Navbar -->
+<div th:fragment="sideNavbar" class="col-lg-3">
+
+    <!-- START Profile Menu-->
+    <div class="d-flex align-items-center d-lg-none">
+        <button class="profile-button border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="h6 mb-0 fw-bold d-lg-none ms-2 text-white"> Create Task</span>
+        </button>
+    </div>
+    <!-- END Profile Menu-->
+
+    <!-- Navbar START-->
+    <nav class="navbar navbar-expand-lg" style="padding-top: 0px;">
+        <div class="offcanvas-xl offcanvas-start" tabindex="-1" id="offcanvasSideNavbar">
+            <!-- Offcanvas header -->
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+
+            <!-- Offcanvas body -->
+            <div class="offcanvas-body d-block px-2 px-lg-0">
+                <!-- Card START -->
+                <div class="card overflow-hidden">
+
+                    <!-- Card body START -->
+                    <div class="card-body pt-0">
+                        <h5 class="card-title mt-3">Add Task</h5>
+                        <div class="text-center">
+
+                            <!-- Avatar / Profile Pic -->
+                            <!--                            <div id="userProfilePic" class="avatar avatar-lg mt-n5 mb-3">-->
+                            <!--                                <a href="#">-->
+
+                            <!--                                    <img style="width: 50px;" class="avatar-img  border  border-3 mt-2"-->
+                            <!--                                         th:src="${user.profileImage}" alt="">-->
+
+                            <!--                                </a>-->
+                            <!--                            </div>-->
+
+                            <!-- User Info -->
+                            <!--                            <h5 class="mb-0"><a href="/userProfile"-->
+                            <!--                                                th:text="${user.firstName}+' '+${user.lastName}"></a></h5>-->
+                            <!--                            <br>-->
+                            <!--                            <small th:text="${user.userTitle}"></small>-->
+                            <!--                            <br>-->
+                            <!--                            <br>-->
+
+                            <!-- User stat START -->
+                            <!--                            <div class="hstack gap-2 gap-xl-3 justify-content-center">-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0" th:text="${user.getPosts().size()}"></h6>-->
+                            <!--                                    <small>Post</small>-->
+                            <!--                                </div>-->
+
+                            <!-- Divider -->
+                            <!--                                <div class="vr"></div>-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0"></h6>-->
+                            <!--                                    <small>Followers</small>-->
+                            <!--                                </div>-->
+                            <!-- Divider -->
+                            <!--                                <div class="vr"></div>-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0"></h6>-->
+                            <!--                                    <small>Following</small>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!-- User stat END -->
+
+                        </div>
+
+                        <!-- Form START -->
+                        <form action="/tasks/create" onsubmit="" method="post">
+
+                            <div class="input-group mb-3 mt-3">
+                                <label class="input-group-text" >Title</label>
+                                <input  class="form-control" name="title" type="text"
+                                           id="todo-input">
+                            </div>
+
+                            <div class="input-group mb-3 mt-3">
+                                <label class="input-group-text" >Task</label>
+                                <textarea  class="form-control" name="action" type="text"
+                                          id="todo-input"></textarea>
+                            </div>
+
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="categorySelect">Category</label>
+                                <select name="category" id="categorySelect" class="todo-category-option form-select">
+                                    <option value="Work">Work</option>
+                                    <option value="Chores">Chores</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Misc">Misc</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="categorySelect">Due Date</label>
+                                <input class="form-control" type="date" name="date">
+                            </div>
+                            <button type="submit" class="btn">
+                                Add Task
+                                <!--                <i class="fa-solid fa-plus"></i>-->
+                            </button>
+
+                        </form>
+                        <!-- Form END -->
+
+                    </div>
+                    <!-- Card body END -->
+
+                    <!-- Card footer1 START -->
+                    <div class="card-footer">
+                    <h5 class="card-title">Filters</h5>
+                    <form action="/tasks/date">
+                        <div class="input-group mb-3 mt-3">
+                            <label class="input-group-text" >Date</label>
+                            <input  class="form-control" name="date" type="date"
+                                    id="todo-input">
+                            <button class="btn btn-outline-secondary" type="submit">Filter</button>
+                        </div>
+                    </form>
+
+                    <form action="/tasks/category">
+                        <div class="input-group mb-3 mt-3">
+                            <label class="input-group-text" >Category</label>
+                            <select name="category" id="categorySelect" class="todo-category-option form-select">
+                                <option value="Work">Work</option>
+                                <option value="Chores">Chores</option>
+                                <option value="Academic">Academic</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Health">Health</option>
+                                <option value="Misc">Misc</option>
+                            </select>
+                            <button class="btn btn-outline-secondary" type="submit">Filter</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- Card footer1 END -->
+
+                    <!-- Card footer -->
+                    <div class="card-footer text-center py-2">
+                        <form th:action="@{/logout}" method="POST">
+                            <button class="btn shareBtn" type="submit">Logout</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Card END -->
+
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar END-->
+</div>
+<!-- END Add Side Navbar-->
+
+<!-- START Edit Side Navbar -->
+<div th:fragment="sideNavbarEdit" class="col-lg-3">
+
+    <!-- START Profile Menu-->
+    <div class="d-flex align-items-center d-lg-none">
+        <button class="profile-button border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="h6 mb-0 fw-bold d-lg-none ms-2 text-white"> Create Task</span>
+        </button>
+    </div>
+    <!-- END Profile Menu-->
+
+    <!-- Navbar START-->
+    <nav class="navbar navbar-expand-lg" style="padding-top: 0px;">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSideNavbar">
+            <!-- Offcanvas header -->
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+
+            <!-- Offcanvas body -->
+            <div class="offcanvas-body d-block px-2 px-lg-0">
+                <!-- Card START -->
+                <div class="card overflow-hidden">
+
+                    <!-- Card body START -->
+                    <div class="card-body pt-0">
+                        <div class="text-center">
+
+                            <!-- Avatar / Profile Pic -->
+                            <!--                            <div id="userProfilePic" class="avatar avatar-lg mt-n5 mb-3">-->
+                            <!--                                <a href="#">-->
+
+                            <!--                                    <img style="width: 50px;" class="avatar-img  border  border-3 mt-2"-->
+                            <!--                                         th:src="${user.profileImage}" alt="">-->
+
+                            <!--                                </a>-->
+                            <!--                            </div>-->
+
+                            <!-- User Info -->
+                            <!--                            <h5 class="mb-0"><a href="/userProfile"-->
+                            <!--                                                th:text="${user.firstName}+' '+${user.lastName}"></a></h5>-->
+                            <!--                            <br>-->
+                            <!--                            <small th:text="${user.userTitle}"></small>-->
+                            <!--                            <br>-->
+                            <!--                            <br>-->
+
+                            <!-- User stat START -->
+                            <!--                            <div class="hstack gap-2 gap-xl-3 justify-content-center">-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0" th:text="${user.getPosts().size()}"></h6>-->
+                            <!--                                    <small>Post</small>-->
+                            <!--                                </div>-->
+
+                            <!-- Divider -->
+                            <!--                                <div class="vr"></div>-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0"></h6>-->
+                            <!--                                    <small>Followers</small>-->
+                            <!--                                </div>-->
+                            <!-- Divider -->
+                            <!--                                <div class="vr"></div>-->
+                            <!-- User stat item -->
+                            <!--                                <div>-->
+                            <!--                                    <h6 class="mb-0"></h6>-->
+                            <!--                                    <small>Following</small>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!-- User stat END -->
+
+                        </div>
+
+                        <!-- Side Nav START -->
+                        <form action="/tasks/edit" onsubmit="" method="post">
+                            <input hidden name="id" th:value="${task.id}">
+
+                            <div class="input-group mb-3 mt-3">
+                                <label class="input-group-text" >Title</label>
+                                <input  class="form-control" name="title" type="text"
+                                        id="todo-input">
+                            </div>
+
+                            <div class="input-group mb-3 mt-3">
+                                <label class="input-group-text" >Task</label>
+                                <textarea  class="form-control" name="action" type="text"
+                                           th:text="${task.action}" id="todo-input"></textarea>
+                            </div>
+
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="categorySelect">Category</label>
+                                <select name="category" id="categorySelect" class="todo-category-option form-select">
+                                    <option th:each="category: ${categories}"
+                                            th:value="${category.getType()}"
+                                            th:text="${category.getType()}"
+                                            th:selected="${category.getType() == task.category.getType()}"></option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="categorySelect">Due Date</label>
+                                <input th:value="${task.scheduledDate}" class="form-control" type="date" name="date">
+                            </div>
+                            <button type="submit" class="btn">
+                                Edit Task
+                                <!--                <i class="fa-solid fa-plus"></i>-->
+                            </button>
+
+                        </form>
+
+
+                        <!-- Side Nav END -->
+                    </div>
+                    <!-- Card body END -->
+                    <!-- Card footer -->
+                    <div class="card-footer text-center py-2">
+                        <form th:action="@{/logout}" method="POST">
+                            <button class="btn shareBtn" type="submit">Logout</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Card END -->
+
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar END-->
+</div>
+<!-- END Edit Side Navbar-->
+
 
 <!--<script >-->
 <div th:fragment="scripts">
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossOrigin="anonymous"></script>
-<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
-<script  src="/js/fileStackApi.js"></script>
-<script  src="/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossOrigin="anonymous"></script>
+    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+    <script src="/js/fileStackApi.js"></script>
+    <script src="/js/script.js"></script>
 </div>
 
 <!--</script>-->
