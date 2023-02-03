@@ -68,7 +68,7 @@
                     <div class="card-body">
                         <!--            <h5 class="card-title">Card title</h5>-->
                         <p th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'"
-                           class="card-text" th:text="${task.action}"></p>
+                           class="card-text" th:text="'Action: '+${task.action}"></p>
 
                         <p th:text="'Date Created: '+${task.dateCreated}"
                            th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'"></p>

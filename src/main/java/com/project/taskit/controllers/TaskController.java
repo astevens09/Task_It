@@ -168,22 +168,24 @@ public class TaskController {
         }
         User loggedinUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.getReferenceById(loggedinUser.getId());
+        String date = "null";
 
         if(!task.getScheduledDate().equals("null")){
-            task.setScheduledDate(dateFormatEdit(task.getScheduledDate()));
+            task.setScheduledDate(task.getScheduledDate());
+            date = dateFormatToDate(task.getScheduledDate());
         }
+
 
 
         model.addAttribute("task",task);
         model.addAttribute("categories", categories);
         model.addAttribute("user",user);
-//        model.addAttribute("date", date);
+        model.addAttribute("date", date);
         return "editPage";
     }
 
     @PostMapping("/tasks/edit")
     public String editTaskPost(@RequestParam String action,
-                               @RequestParam String completed,
                                @RequestParam String category,
                                @RequestParam(required = false, defaultValue = "null") String date,
                                @RequestParam long id){
@@ -192,9 +194,8 @@ public class TaskController {
         Category category1 = categoryDao.findByType(category);
 
         task.setAction(action);
-        task.setCompleted(completed);
         task.setCategory(category1);
-        task.setScheduledDate(dateFormat(date));
+        task.setScheduledDate(dateFormatFinal(date));
 
         System.out.println("Id: "+id);
         System.out.println("Task c date: "+ task.getDateCreated());
@@ -204,7 +205,7 @@ public class TaskController {
 
         taskDao.save(task);
 
-        return "redirect:/tasks";
+        return "redirect:/tasks/edit/"+id;
 //        taskDao.save(task);
     }
 
@@ -226,4 +227,12 @@ public class TaskController {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E MMM dd, yyyy");
         return  formatter.format(localDate).toString();
     }
+
+    public static String dateFormatToDate(String d){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd, yyyy");
+        LocalDate localDate = LocalDate.parse(d,formatter);
+        return  localDate.toString();
+    }
+
 }
