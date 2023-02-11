@@ -15,5 +15,9 @@ public class Action {
     @Column
     String task;
 
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
+
 
 }

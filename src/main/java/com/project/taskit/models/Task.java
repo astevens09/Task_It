@@ -40,6 +40,10 @@ public class Task {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    private List<Action> actions;
+
+
     public Task() {
     }
 
