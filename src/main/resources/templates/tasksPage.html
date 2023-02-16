@@ -76,6 +76,9 @@
                                 <p class="card-text" th:text="'Due date: '+${task.scheduledDate}"
                                    th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
 
+                                <p class="card-text" th:text="'Due date: '+${task.action}"
+                                   th:style="${task.completed.equalsIgnoreCase('incomplete')}?'': 'text-decoration:line-through'" ></p>
+
                                 <div class="d-flex justify-content-between">
                                     <form th:action="'/tasks/complete/'+${task.id}" method="post">
                                         <button type="submit" class="btn btn-primary"
